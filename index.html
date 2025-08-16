@@ -1,2 +1,536 @@
-<h1>你好！\n</h1>
-<h1>Hello！</h1>
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yuze's Digital Playground</title>
+<style>
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #3498db;
+    --code-bg: #f8f9fa;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    padding: 10px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.container {
+    display: flex;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main-content {
+    flex: 4;
+    min-width: 0;
+}
+
+.sidebar {
+    flex: 1;
+    min-width: 280px;
+}
+
+header {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+.basketball {
+    width: 50px;
+    height: 50px;
+    background: #e67e22;
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.5s infinite;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.project-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    font-size: 0.95rem;
+}
+
+.project-card h3 {
+    font-size: 1.2rem;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.sidebar-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+.contact-info {
+    display: grid;
+    gap: 1rem;
+}
+
+.visitor-counter {
+    background: var(--accent-color);
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    margin: 0.5rem 0;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.achievement-timeline {
+    padding: 1.5rem;
+    background: white;
+    border-radius: 15px;
+    margin: 1.5rem 0;
+}
+
+.code-block {
+    background: var(--code-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    font-family: 'Consolas', monospace;
+    white-space: pre-wrap;
+}
+
+.oi-tips {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 15px;
+    border-left: 5px solid var(--accent-color);
+    margin: 1.5rem 0;
+}
+
+/* AI Panel 样式 */
+.ai-panel {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 350px;
+    height: 500px;
+    background: rgba(255,255,255,0.98);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: translateY(120%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.ai-panel.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.ai-fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #7eccff, #ffccf1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.ai-fab.active {
+    transform: rotate(360deg) scale(1.1);
+    background: linear-gradient(135deg, #fecfff, #68c2ff);
+}
+
+.ai-header {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.mode-switch {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.mode-switch button {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 8px;
+    background: #f0f0f0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mode-switch button.active {
+    background: var(--accent-color);
+    color: white;
+}
+
+.ai-response {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.ai-input-area {
+    padding: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.ai-input-area textarea {
+    width: 100%;
+    height: 80px;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    resize: none;
+}
+
+.gradient-btn {
+    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.gradient-btn:active {
+    transform: scale(0.95);
+}
+
+.char-counter {
+    text-align: right;
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 0.3rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        order: -1;
+    }
+    .main-content,
+    .sidebar {
+        flex: 1;
+    }
+    
+    .ai-panel {
+        width: 90%;
+        right: 5%;
+        height: 70vh;
+    }
+}
+</style>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="main-content">
+        <header>
+            <div class="basketball"></div>
+            <h1>Yuze's OI Journey</h1>
+            <p>初一蒟蒻OIer | 篮球爱好者 | 全栈开发者</p>
+        </header>
+
+        <section class="project-grid">
+            <a href="/md" class="project-card" target="_blank" rel="noopener">
+                <h3>📝 MD编辑器</h3>
+                <p>实时Markdown编辑预览工具</p>
+                <p class="project-link">点击体验 →</p>
+            </a>
+            <a href="/ai" class="project-card" target="_blank" rel="noopener">
+                <h3>🤖 AI实验室</h3>
+                <p>探索人工智能的奇妙世界</p>
+                <p class="project-link">点击体验 →</p>
+            </a>
+            <a href="/music" class="project-card" target="_blank">
+                <h3>🎵 音乐播放器</h3>
+                <p>在线音乐播放与歌单管理</p>
+                <p class="project-link">点击体验 →</p>
+            </a>
+            <a href="/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%E5%99%A8" class="project-card" target="_blank">
+                <h3>🔢 进制转换器</h3>
+                <p>支持2-36进制快速转换</p>
+                <p class="project-link">点击体验 →</p>
+            </a>
+            <a href="/jishi" class="project-card" target="_blank">
+                <h3>⏱️ 班级计时器</h3>
+                <p>定制化课程时间管理工具</p>
+                <p class="project-link">点击体验 →</p>
+            </a>
+            <a href="/clock" class="project-card" target="_blank">
+                <h3>🍅 番茄钟</h3>
+                <p>高效时间管理工具</p>
+                <p class="project-link">点击体验 →</p>
+            </a>
+        </section>
+
+        <section class="achievement-timeline">
+            <h2>🏆 2024成就墙</h2>
+            <ul>
+                <li>📅 8月：成功搭建个人第一个网站</li>
+                <li>📜 10月：CSP-J初赛一等奖</li>
+                <li>💻 11月：CSP-J复赛三等奖</li>
+                <li>🏅 区赛一等奖 / 市赛三等奖</li>
+            </ul>
+        </section>
+
+        <section class="oi-tips">
+            <h2>🔑 OIer生存指南</h2>
+            <div class="code-block">
+                ·——暴力出奇迹，骗分过样例。数学先打表，ＤＰ看运气。  
+                ·——穷举ＴＬＥ，递推ＵＫＥ。模拟ＭＬＥ，贪心还ＣＥ。  
+                ·——想要骗到分，就要有方法。图论背模板，数论背公式。  
+                ·——动规背方程，高精背代码。如果都没背，干脆输样例。
+            </div>
+        </section>
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar-card">
+            <h2>🚀 YUZE-IT</h2>
+            <p>专注于全栈开发与算法研究的个人技术品牌，致力于打造有趣实用的数字产品。</p>
+        </div>
+
+        <div class="sidebar-card">
+            <h3>⏰ 实时时钟</h3>
+            <div id="compact-clock"></div>
+        </div>
+
+        <div class="sidebar-card">
+            <h3><a href="/blog">📖YUZE-IT个人BLOG</a></h3>   
+        </div>
+        <div class="sidebar-card">
+            <h3><a href="https://zengzimo.netlify.app/">😊友链：ZIMO-HUB</a></h3>   
+        </div>
+        <div class="sidebar-card">
+            <h3>联系我们</h3>
+            <ul class="contact-info">
+                <li>📧 Email:  yuze-it@outlook.com</li>
+                <li>🐧 QQ: 3569339239</li>
+                <li>🐱 GitHub: <a href="https://github.com/yuze-it">yuze-it</a></li>
+                <li>📖 洛谷: <a href="https://www.luogu.com.cn/user/1023108">1023108</a></li>
+                <li>💬 WeChat: Best-of-417</li>
+            </ul>
+        </div>
+
+        <div class="sidebar-card">
+            <div class="visitor-counter">
+                <span id="busuanzi_container_site_pv">
+                    👥 访客数：<span id="busuanzi_value_site_pv"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- AI 聊天组件 -->
+<div class="ai-fab" onclick="toggleAIChat()">🤖</div>
+<div class="ai-panel">
+    <div class="ai-header">
+        <h3>YUZE-IT 智能助手</h3>
+    </div>
+    <div id="ai-response" class="ai-response">
+        <p style="color: var(--accent-color); text-align: center;">🤖 准备就绪！</p>
+    </div>
+    <div class="ai-input-area">
+        <textarea id="ai-input" placeholder="输入问题（Shift+Enter换行）" maxlength="200"></textarea>
+        <button id="send-btn" class="gradient-btn">⚡ 发送</button>
+    </div>
+</div>
+
+<footer>
+    <p align="center">🚀 持续升级中的蒟蒻OIer | 📧 yuze-it@outlook.com</p>
+    <p align="center">© 2025 Yuze's Digital Playground</p>
+</footer>
+
+<script>
+    // 初始化实时时钟
+    function updateCompactClock() {
+        const date = new Date();
+        const timeString = date.toLocaleTimeString('zh-CN', { hour12: false });
+        const dateString = date.toLocaleDateString('zh-CN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        });
+        document.getElementById('compact-clock').innerHTML = `
+            <div style="font-size: 1.8em; color: ${getComputedStyle(document.documentElement).getPropertyValue('--primary-color')}">${timeString}</div>
+            <div>${dateString}</div>
+        `;
+    }
+    setInterval(updateCompactClock, 1000);
+    updateCompactClock();
+
+    // 随机名言
+    const quotes = [
+        "「代码与篮球都需要精准的算法」",
+        "「每天进步1%，一年强大37倍」",
+        "「BUG是程序员最好的老师」"
+    ];
+    document.querySelector('.achievement-timeline').insertAdjacentHTML('beforeend', 
+    `<p style="text-align:center;margin-top:1rem">${quotes[Math.floor(Math.random() * quotes.length)]}</p>`);
+
+    // AI 聊天组件
+    function toggleAIChat() {
+    const panel = document.querySelector('.ai-panel');
+    const fab = document.querySelector('.ai-fab');
+    panel.classList.toggle('active');
+    fab.classList.toggle('active');
+
+    // 如果是打开悬浮窗，显示功能提示词
+        if (panel.classList.contains('active')) {
+            const responseBox = document.getElementById("ai-response");
+            responseBox.innerHTML = `
+                <p style="color: var(--accent-color); text-align: center;">
+                    🤖 欢迎使用 YUZE-IT-Bot！我可以提供学术支持和日常聊天服务。以下是一些你可以尝试的功能：
+                </p>
+                <p style="color: var(--accent-color);">
+                    1. <strong>学术支持</strong>：代码优化、算法问题、论文解读、调试帮助、学习资源推荐。<br>
+                    2. <strong>聊天互动</strong>：轻松话题、技术趣闻、开发者日常。<br>
+                    3. <strong>实用工具</strong>：代码生成、工具推荐、技术趋势。<br>
+                    4. <strong>了解开发者</strong>：我的开发者是雨泽。
+                </p>
+            `;
+        }
+    }
+    // 增加全局点击事件监听器
+    document.addEventListener("click", function(event) {
+        const aiPanel = document.querySelector('.ai-panel');
+        const aiFab = document.querySelector('.ai-fab');
+
+        // 检查点击是否在悬浮窗或悬浮按钮之外
+        if (!aiPanel.contains(event.target) && !aiFab.contains(event.target)) {
+            if (aiPanel.classList.contains('active')) {
+                toggleAIChat(); // 调用关闭悬浮窗的函数
+            }
+        }
+    });
+    // 消息发送逻辑
+    async function sendMessage() {
+        const inputBox = document.getElementById("ai-input");
+        const input = inputBox.value.trim();
+        const responseBox = document.getElementById("ai-response");
+
+        if (!input) return;
+
+        // 清除状态提示
+        responseBox.innerHTML = responseBox.innerHTML.replace(/ 😎正在思考\.\.\./g, '');
+
+        try {
+            // 添加临时提示
+            const thinkingMsg = document.createElement('p');
+            thinkingMsg.style.color = "var(--accent-color)";
+            thinkingMsg.textContent = "YUZE-Bot正在思考...";
+            responseBox.appendChild(thinkingMsg);
+
+            const response = await fetch("https://api.moonshot.cn/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer sk-N46UhIXp3ra7OqrixuUSJqrZS3HPPQ6hu73RohOwyHnlaFSu`
+                },
+                body: JSON.stringify({
+                    model: "moonshot-v1-8k",
+                    messages: [{
+                    role: "system",
+                    content: `
+                        YUZE-IT-Bot 是一个智能助手，专门为 YUZE-IT 的开发者提供学术支持和日常聊天服务。
+                        特点：
+                        1. 专业性：能够解答编程、算法、数据结构、机器学习等计算机科学领域的问题。
+                        2. 学术支持：帮助开发者理解论文、优化代码、调试错误、提供学习资源推荐。
+                        3. 友好互动：能够进行轻松愉快的聊天，缓解开发压力。
+                        4. 高效性：快速响应，提供简洁、准确的答案。
+                        开发者是雨泽。
+                    `
+                },
+                {
+                    role: "user",
+                    content: input
+                }],
+                    temperature: 0.7,
+                    stream: false
+                })
+            });
+
+            // 移除临时提示
+            responseBox.removeChild(thinkingMsg);
+
+            if (!response.ok) {
+                throw new Error(`HTTP错误! 状态码: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const content = data.choices[0]?.message?.content || '未知错误';
+
+            // 显示回复
+            const reply = document.createElement('p');
+            reply.textContent = content;
+            responseBox.appendChild(reply);
+
+        } catch (error) {
+            responseBox.innerHTML += `<p style="color: #ef476f;">❌ 请求失败: ${error.message}</p>`;
+        } finally {
+            inputBox.value = ''; // 清空输入框
+        }
+    }
+
+    // 绑定发送按钮点击事件
+    document.getElementById("send-btn").addEventListener("click", sendMessage);
+
+    // 绑定键盘事件
+    document.getElementById("ai-input").addEventListener("keydown", function(e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+</script>
+</body>
+</html>
