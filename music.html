@@ -1,1 +1,213 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音乐世界 - Yuhan的编程世界</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e6f7ff 0%, #f0f9ff 100%);
+            color: #1a237e;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            padding: 40px 0 20px;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #1a237e;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #3949ab;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4fc3f7, #2962ff);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tool-icon {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: #2962ff;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(41, 98, 255, 0.1);
+        }
+        
+        .tool-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #1a237e;
+        }
+        
+        .tool-card p {
+            color: #546e7a;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .tool-link {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(90deg, #2962ff, #4fc3f7);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(41, 98, 255, 0.3);
+        }
+        
+        .tool-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(41, 98, 255, 0.4);
+        }
+        
+        .tool-link:active {
+            transform: translateY(0);
+        }
+        
+        .tool-link i {
+            margin-left: 8px;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            margin-top: 70px;
+            padding: 25px 0;
+            color: #546e7a;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(41, 98, 255, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>音乐世界</h1>
+        </header>
+        
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Counting Stars</h3>
+                <a href="" class="tool-link">立即使用 <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-random"></i>
+                </div>
+                <h3>随机抽人插件</h3>
+                <p>功能强大的浏览器插件，适用于课堂提问、抽奖活动等多种随机选择场景。</p>
+                <a href="https://www.luogu.com.cn/api/team/downloadFile/5fp2flja" class="tool-link">立即使用 <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-images"></i>
+                </div>
+                <h3>图床工具</h3>
+                <p>快速上传和管理图片，获取外链地址，支持多种图片格式，简单易用。</p>
+                <a href="https://www.luogu.com.cn/api/team/downloadFile/zhu8c6vt" class="tool-link">立即使用 <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-stopwatch"></i>
+                </div>
+                <h3>桌面计时器</h3>
+                <p>美观实用的桌面计时工具，帮助您更好地管理时间，提高工作和学习效率。</p>
+                <a href="https://www.luogu.com.cn/api/team/downloadFile/2cz3tqak" class="tool-link">立即使用 <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+        
+        <footer>
+                <p>联系我们：<a href="https://www.luogu.com.cn/team/104000">@YUZE-IT</a></p>
+                <p>- YUZE-IT工作室出品：<a href="https://www.luogu.com.cn/team/104000">https://yuze.netlify.app</a> - </p>
+                <p>© 2025 Yuhan的编程世界 | 精心打造，为您提供最佳的工具体验</p>
+        </footer>
+    </div>
+</body>
+</html>
