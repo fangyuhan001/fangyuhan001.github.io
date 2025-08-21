@@ -5,197 +5,559 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>音乐世界 - Yuhan的编程世界</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #e6f7ff 0%, #f0f9ff 100%);
-            color: #1a237e;
-            min-height: 100vh;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            padding: 40px 0 20px;
-            margin-bottom: 40px;
-        }
-        
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            color: #1a237e;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            color: #3949ab;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            line-height: 1.6;
-        }
-        
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-        
-        .tool-card {
-            background: white;
-            border-radius: 16px;
-            padding: 30px 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #4fc3f7, #2962ff);
-        }
-        
-        .tool-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-        
-        .tool-icon {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            color: #2962ff;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(41, 98, 255, 0.1);
-        }
-        
-        .tool-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: #1a237e;
-        }
-        
-        .tool-card p {
-            color: #546e7a;
-            margin-bottom: 25px;
-            line-height: 1.6;
-            flex-grow: 1;
-        }
-        
-        .tool-link {
-            display: inline-block;
-            padding: 12px 28px;
-            background: linear-gradient(90deg, #2962ff, #4fc3f7);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(41, 98, 255, 0.3);
-        }
-        
-        .tool-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(41, 98, 255, 0.4);
-        }
-        
-        .tool-link:active {
-            transform: translateY(0);
-        }
-        
-        .tool-link i {
-            margin-left: 8px;
-            font-size: 0.9rem;
-        }
-        
-        footer {
-            margin-top: 70px;
-            padding: 25px 0;
-            color: #546e7a;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(41, 98, 255, 0.2);
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#3b82f6',
+                        accent: '#60a5fa',
+                        dark: '#1e3a8a',
+                        light: '#eff6ff'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
             }
-            
-            .subtitle {
-                font-size: 1rem;
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
             }
-            
-            .tools-grid {
-                grid-template-columns: 1fr;
-                max-width: 400px;
-                margin: 0 auto;
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-8px);
+            }
+            .gradient-mask {
+                mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+                -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
             }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>音乐世界</h1>
+<body class="bg-gradient-to-br from-light to-blue-50 text-dark min-h-screen font-sans">
+    <!-- 背景装饰 -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none opacity-20">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary rounded-full blur-3xl"></div>
+        <div class="absolute top-1/3 -left-20 w-60 h-60 bg-secondary rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-accent rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
+        <header class="py-16 md:py-24 text-center">
+            <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold mb-6 text-dark text-shadow bg-clip-text text-transparent bg-gradient-to-r from-primary to-dark">-to-r from-primary to-dark">
+                音乐世界
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-blue-700 max-w-2xl mx-auto leading-relaxed">
+                探索令人难忘的旋律，感受音乐带来的无限魅力，每一首歌都讲述着独特的故事
+            </p>
         </header>
         
-        <div class="tools-grid">
-            <div class="tool-card">
-                <div class="tool-icon">
-                    <i class="fas fa-book"></i>
+        <!-- 音乐分类导航 -->
+        <nav class="mb-12 overflow-x-auto pb-2">
+            <ul class="flex justify-center gap-2 sm:gap-4 whitespace-nowrap">
+                <li><button class="px-4 py-2 bg-primary text-white rounded-full text-sm font-medium">全部歌曲</button></li>
+                <li><button class="px-4 py-2 bg-white/80 hover:bg-white text-dark rounded-full text-sm font-medium transition-colors">流行</button></li>
+                <li><button class="px-4 py-2 bg-white/80 hover:bg-white text-dark rounded-full text-sm font-medium transition-colors">摇滚</button></li>
+                <li><button class="px-4 py-2 bg-white/80 hover:bg-white text-dark rounded-full text-sm font-medium transition-colors">电子</button></li>
+                <li><button class="px-4 py-2 bg-white/80 hover:bg-white text-dark rounded-full text-sm font-medium transition-colors">民谣</button></li>
+            </ul>
+        </nav>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <!-- 音乐卡片 1 -->
+            <div class="tool-card bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl card-hover border border-blue-100" data-song-id="1">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://picsum.photos/id/1025/600/400" alt="Counting Stars 专辑封面" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <button class="absolute bottom-4 right-4 w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white shadow-lg hover:bg-primary/90 transition-colors play-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
                 </div>
-                <h3>Counting Stars</h3>
-                <p>One Republic</p>
-                <a href="https://www.bilibili.com/video/BV14r15Y3E8q/" class="tool-link">立即播放 <i class="fas fa-arrow-right"></i></a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-medium bg-blue-100 text-primary px-2.5 py-0.5 rounded-full">流行摇滚</span>
+                        <span class="text-sm text-gray-500"><i class="far fa-clock mr-1"></i> 3:52</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-1 text-dark song-title">Counting Stars</h3>
+                    <p class="text-gray-600 mb-4 song-artist">One Republic</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="far fa-heart"></i></button>
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="far fa-comment"></i></button>
+                        </div>
+                        <a href="https://www.bilibili.com/video/BV14r15Y3E8q/" target="_blank" class="text-primary font-medium text-sm hover:underline flex items-center">
+                            查看详情 <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
             
-            <div class="tool-card">
-                <div class="tool-icon">
-                    <i class="fas fa-random"></i>
+            <!-- 音乐卡片 2 -->
+            <div class="tool-card bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl card-hover border border-blue-100" data-song-id="2">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://picsum.photos/id/1074/600/400" alt="That Girl 专辑封面" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <button class="absolute bottom-4 right-4 w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white shadow-lg hover:bg-primary/90 transition-colors play-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
                 </div>
-                <h3>That Girl</h3>
-                <p>Olly Murs</p>
-                <a href="https://www.bilibili.com/video/BV1c6epeyEVn/" class="tool-link">立即播放 <i class="fas fa-arrow-right"></i></a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-medium bg-blue-100 text-primary px-2.5 py-0.5 rounded-full">流行</span>
+                        <span class="text-sm text-gray-500"><i class="far fa-clock mr-1"></i> 3:41</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-1 text-dark song-title">That Girl</h3>
+                    <p class="text-gray-600 mb-4 song-artist">Olly Murs</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="far fa-heart"></i></button>
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="far fa-comment"></i></button>
+                        </div>
+                        <a href="https://www.bilibili.com/video/BV1c6epeyEVn/" target="_blank" class="text-primary font-medium text-sm hover:underline flex items-center">
+                            查看详情 <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
             
-            <div class="tool-card">
-                <div class="tool-icon">
-                    <i class="fas fa-images"></i>
+            <!-- 音乐卡片 3 -->
+            <div class="tool-card bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl card-hover border border-blue-100" data-song-id="3">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://picsum.photos/id/1082/600/400" alt="Call You Mine 专辑封面" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <button class="absolute bottom-4 right-4 w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white shadow-lg hover:bg-primary/90 transition-colors play-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
                 </div>
-                <h3>Call You Mine</h3>
-                <p>烟鬼乐队</p>
-                <a href="https://www.bilibili.com/video/BV1ub4y1A7ZG/" class="tool-link">立即播放 <i class="fas fa-arrow-right"></i></a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-medium bg-blue-100 text-primary px-2.5 py-0.5 rounded-full">电子</span>
+                        <span class="text-sm text-gray-500"><i class="far fa-clock mr-1"></i> 3:19</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-1 text-dark song-title">Call You Mine</h3>
+                    <p class="text-gray-600 mb-4 song-artist">烟鬼乐队</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="far fa-heart"></i></button>
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="far fa-comment"></i></button>
+                        </div>
+                        <a href="https://www.bilibili.com/video/BV1ub4y1A7ZG/" target="_blank" class="text-primary font-medium text-sm hover:underline flex items-center">
+                            查看详情 <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-        <footer>
-                <p>© 2025 Yuhan的编程世界</p>
+        </div>
+        
+        <!-- 加载更多按钮 -->
+        <div class="mt-12 text-center">
+            <button class="px-6 py-3 bg-white hover:bg-gray-50 text-primary border border-primary/30 rounded-full font-medium shadow-sm hover:shadow transition-all flex items-center gap-2 mx-auto" id="load-more">
+                加载更多歌曲 <i class="fas fa-chevron-down text-sm"></i>
+            </button>
+        </div>
+        
+        <!-- 底部音乐播放器 -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 py-3 px-4 shadow-lg z-50">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <div class="flex items-center gap-3 w-1/3">
+                    <img src="https://picsum.photos/id/1025/80/80" alt="当前播放歌曲封面" class="w-12 h-12 rounded object-cover" id="player-cover">
+                    <div class="min-w-0">
+                        <h4 class="font-medium text-sm truncate" id="player-title">Counting Stars</h4>
+                        <p class="text-gray-500 text-xs truncate" id="player-artist">One Republic</p>
+                    </div>
+                    <button class="text-gray-400 hover:text-primary transition-colors hidden sm:block" id="like-btn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                
+                <div class="flex flex-col items-center w-1/3">
+                    <div class="flex items-center gap-4 mb-2">
+                        <button class="text-gray-500 hover:text-primary transition-colors" id="shuffle-btn">
+                            <i class="fas fa-random"></i>
+                        </button>
+                        <button class="text-gray-500 hover:text-primary transition-colors" id="prev-btn">
+                            <i class="fas fa-step-backward"></i>
+                        </button>
+                        <button class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center shadow-md hover:bg-primary/90 transition-colors" id="play-pause-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="text-gray-500 hover:text-primary transition-colors" id="next-btn">
+                            <i class="fas fa-step-forward"></i>
+                        </button>
+                        <button class="text-gray-500 hover:text-primary transition-colors" id="repeat-btn">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                    <div class="w-full flex items-center gap-2">
+                        <span class="text-xs text-gray-500" id="current-time">0:00</span>
+                        <div class="h-1 bg-gray-200 rounded-full flex-1 overflow-hidden cursor-pointer" id="progress-bar">
+                            <div class="h-full bg-primary rounded-full" style="width: 0%" id="progress"></div>
+                        </div>
+                        <span class="text-xs text-gray-500" id="total-time">0:00</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-end gap-3 w-1/3">
+                    <button class="text-gray-500 hover:text-primary transition-colors hidden sm:block" id="playlist-btn">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button class="text-gray-500 hover:text-primary transition-colors hidden md:block" id="volume-btn">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <div class="h-1 bg-gray-200 rounded-full w-20 hidden md:block overflow-hidden cursor-pointer" id="volume-bar">
+                        <div class="h-full bg-primary rounded-full" style="width: 70%" id="volume-level"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="py-8 mt-16 text-center text-gray-500 text-sm border-t border-blue-100">
+            <p>© 2025 Yuhan的编程世界 | 探索音乐的无限可能</p>
         </footer>
     </div>
+
+    <script>
+        // 音乐数据
+        const songs = [
+            {
+                id: 1,
+                title: "Counting Stars",
+                artist: "One Republic",
+                cover: "https://picsum.photos/id/1025/80/80",
+                duration: 232, // 秒数
+                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" // 示例音乐URL
+            },
+            {
+                id: 2,
+                title: "That Girl",
+                artist: "Olly Murs",
+                cover: "https://picsum.photos/id/1074/80/80",
+                duration: 221,
+                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+            },
+            {
+                id: 3,
+                title: "Call You Mine",
+                artist: "烟鬼乐队",
+                cover: "https://picsum.photos/id/1082/80/80",
+                duration: 199,
+                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+            }
+        ];
+        
+        // 播放器状态
+        let player = {
+            audio: new Audio(),
+            currentSong: null,
+            isPlaying: false,
+            shuffle: false,
+            repeat: false,
+            volume: 0.7
+        };
+        
+        // DOM元素
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const shuffleBtn = document.getElementById('shuffle-btn');
+        const repeatBtn = document.getElementById('repeat-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const progress = document.getElementById('progress');
+        const currentTimeEl = document.getElementById('current-time');
+        const totalTimeEl = document.getElementById('total-time');
+        const volumeBar = document.getElementById('volume-bar');
+        const volumeLevel = document.getElementById('volume-level');
+        const volumeBtn = document.getElementById('volume-btn');
+        const playerTitle = document.getElementById('player-title');
+        const playerArtist = document.getElementById('player-artist');
+        const playerCover = document.getElementById('player-cover');
+        const likeBtn = document.getElementById('like-btn');
+        const playButtons = document.querySelectorAll('.play-btn');
+        
+        // 初始化播放器
+        function initPlayer() {
+            // 设置初始音量
+            player.audio.volume = player.volume;
+            
+            // 更新音量UI
+            volumeLevel.style.width = (player.volume * 100) + '%';
+            
+            // 播放/暂停按钮事件
+            playPauseBtn.addEventListener('click', togglePlayPause);
+            
+            // 上一曲/下一曲按钮事件
+            prevBtn.addEventListener('click', playPreviousSong);
+            nextBtn.addEventListener('click', playNextSong);
+            
+            // 随机播放按钮事件
+            shuffleBtn.addEventListener('click', toggleShuffle);
+            
+            // 循环播放按钮事件
+            repeatBtn.addEventListener('click', toggleRepeat);
+            
+            // 进度条点击事件
+            progressBar.addEventListener('click', seek);
+            
+            // 音量条点击事件
+            volumeBar.addEventListener('click', setVolume);
+            
+            // 音量按钮事件
+            volumeBtn.addEventListener('click', toggleMute);
+            
+            // 喜欢按钮事件
+            likeBtn.addEventListener('click', toggleLike);
+            
+            // 音频时间更新事件
+            player.audio.addEventListener('timeupdate', updateProgress);
+            
+            // 音频结束事件
+            player.audio.addEventListener('ended', handleAudioEnd);
+            
+            // 歌曲卡片播放按钮事件
+            playButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const card = this.closest('.tool-card');
+                    const songId = parseInt(card.dataset.songId);
+                    playSong(songId);
+                });
+            });
+            
+            // 加载更多按钮事件
+            document.getElementById('load-more').addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> 加载中...';
+                
+                // 模拟加载延迟
+                setTimeout(() => {
+                    this.innerHTML = '加载更多歌曲 <i class="fas fa-chevron-down text-sm"></i>';
+                    alert('已加载全部歌曲');
+                }, 1500);
+            });
+        }
+        
+        // 播放指定歌曲
+        function playSong(songId) {
+            // 找到要播放的歌曲
+            const song = songs.find(s => s.id === songId);
+            if (!song) return;
+            
+            // 如果是同一首歌，切换播放状态
+            if (player.currentSong && player.currentSong.id === songId) {
+                togglePlayPause();
+                return;
+            }
+            
+            // 更新当前歌曲
+            player.currentSong = song;
+            
+            // 更新播放器UI
+            updatePlayerUI();
+            
+            // 加载并播放歌曲
+            player.audio.src = song.url;
+            player.audio.load();
+            player.audio.play();
+            
+            // 更新播放状态
+            player.isPlaying = true;
+            updatePlayPauseUI();
+            
+            // 更新所有卡片的播放按钮状态
+            updateAllPlayButtons();
+        }
+        
+        // 切换播放/暂停
+        function togglePlayPause() {
+            if (!player.currentSong) {
+                // 如果没有当前歌曲，播放第一首
+                playSong(1);
+                return;
+            }
+            
+            if (player.isPlaying) {
+                player.audio.pause();
+            } else {
+                player.audio.play();
+            }
+            
+            player.isPlaying = !player.isPlaying;
+            updatePlayPauseUI();
+            updateAllPlayButtons();
+        }
+        
+        // 播放上一首
+        function playPreviousSong() {
+            if (!player.currentSong) return;
+            
+            let currentIndex = songs.findIndex(s => s.id === player.currentSong.id);
+            let prevIndex = (currentIndex - 1 + songs.length) % songs.length;
+            playSong(songs[prevIndex].id);
+        }
+        
+        // 播放下一首
+        function playNextSong() {
+            if (!player.currentSong) return;
+            
+            let currentIndex = songs.findIndex(s => s.id === player.currentSong.id);
+            let nextIndex = (currentIndex + 1) % songs.length;
+            playSong(songs[nextIndex].id);
+        }
+        
+        // 切换随机播放
+        function toggleShuffle() {
+            player.shuffle = !player.shuffle;
+            shuffleBtn.classList.toggle('text-primary', player.shuffle);
+        }
+        
+        // 切换循环播放
+        function toggleRepeat() {
+            player.repeat = !player.repeat;
+            repeatBtn.classList.toggle('text-primary', player.repeat);
+        }
+        
+        // 调整播放进度
+        function seek(e) {
+            if (!player.currentSong) return;
+            
+            const rect = progressBar.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            player.audio.currentTime = pos * player.audio.duration;
+        }
+        
+        // 设置音量
+        function setVolume(e) {
+            const rect = volumeBar.getBoundingClientRect();
+            const vol = (e.clientX - rect.left) / rect.width;
+            player.volume = vol;
+            player.audio.volume = vol;
+            volumeLevel.style.width = (vol * 100) + '%';
+            
+            // 更新音量图标
+            updateVolumeIcon();
+        }
+        
+        // 切换静音
+        function toggleMute() {
+            player.audio.muted = !player.audio.muted;
+            updateVolumeIcon();
+        }
+        
+        // 切换喜欢状态
+        function toggleLike() {
+            const icon = likeBtn.querySelector('i');
+            icon.classList.toggle('far');
+            icon.classList.toggle('fas');
+            icon.classList.toggle('text-red-500');
+        }
+        
+        // 更新播放进度
+        function updateProgress() {
+            if (!player.currentSong || isNaN(player.audio.duration)) return;
+            
+            const percent = (player.audio.currentTime / player.audio.duration) * 100;
+            progress.style.width = percent + '%';
+            
+            // 更新时间显示
+            currentTimeEl.textContent = formatTime(player.audio.currentTime);
+            totalTimeEl.textContent = formatTime(player.audio.duration);
+        }
+        
+        // 处理音频结束
+        function handleAudioEnd() {
+            if (player.repeat) {
+                // 单曲循环
+                player.audio.currentTime = 0;
+                player.audio.play();
+            } else {
+                // 播放下一首
+                playNextSong();
+            }
+        }
+        
+        // 更新播放器UI
+        function updatePlayerUI() {
+            if (!player.currentSong) return;
+            
+            playerTitle.textContent = player.currentSong.title;
+            playerArtist.textContent = player.currentSong.artist;
+            playerCover.src = player.currentSong.cover;
+            totalTimeEl.textContent = formatTime(player.currentSong.duration);
+        }
+        
+        // 更新播放/暂停按钮UI
+        function updatePlayPauseUI() {
+            const icon = playPauseBtn.querySelector('i');
+            if (player.isPlaying) {
+                icon.classList.remove('fa-play');
+                icon.classList.add('fa-pause');
+            } else {
+                icon.classList.remove('fa-pause');
+                icon.classList.add('fa-play');
+            }
+        }
+        
+        // 更新所有卡片的播放按钮状态
+        function updateAllPlayButtons() {
+            playButtons.forEach(button => {
+                const card = button.closest('.tool-card');
+                const songId = parseInt(card.dataset.songId);
+                const icon = button.querySelector('i');
+                
+                // 重置所有按钮
+                icon.classList.remove('fa-pause');
+                icon.classList.add('fa-play');
+                
+                // 如果是当前播放的歌曲且正在播放，显示暂停图标
+                if (player.currentSong && player.currentSong.id === songId && player.isPlaying) {
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                }
+            });
+        }
+        
+        // 更新音量图标
+        function updateVolumeIcon() {
+            const icon = volumeBtn.querySelector('i');
+            icon.className = '';
+            
+            if (player.audio.muted) {
+                icon.classList.add('fas', 'fa-volume-mute');
+            } else if (player.volume < 0.5) {
+                icon.classList.add('fas', 'fa-volume-down');
+            } else {
+                icon.classList.add('fas', 'fa-volume-up');
+            }
+        }
+        
+        // 格式化时间（秒 -> mm:ss）
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+        
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 初始化播放器
+        document.addEventListener('DOMContentLoaded', initPlayer);
+    </script>
 </body>
 </html>
